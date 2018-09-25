@@ -1,0 +1,5 @@
+exports:
+    header-dirs:
+        - headers
+    modules: 
+        scas: scas

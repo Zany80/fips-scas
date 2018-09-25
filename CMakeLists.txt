@@ -6,16 +6,8 @@ include("${FIPS_ROOT_DIR}/cmake/fips.cmake")
 fips_setup(PROJECT scas)
 fips_include_directories("${PROJECT_SOURCE_DIR}/headers")
 
-fips_begin_sharedlib(scas)
+fips_begin_module(scas)
 fips_src(src/)
-fips_end_sharedlib()
-
-if (FIPS_EMSCRIPTEN)
-	if (FIPS_EMSCRIPTEN_USE_WASM)
-		set_target_properties(scas PROPERTIES SUFFIX ".wasm")
-	else()
-		set_target_properties(scas PROPERTIES SUFFIX ".js")
-	endif()
-endif()
+fips_end_module()
 
 fips_finish()
