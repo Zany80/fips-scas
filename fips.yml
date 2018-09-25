@@ -2,4 +2,4 @@ exports:
     header-dirs:
         - headers
     modules: 
-        scas: src
+        scas: .
