@@ -2,6 +2,11 @@
 
 Assembler and linker for z80.
 
+## Fips version
+
+This is a fipsified version for use as a library. Please, PLEASE DO NOT try to use this as a PROGRAM!
+If you need a z80 assembler/linker, please use [the standard scas build](https://github.com/knightos/scas)!
+
 ## Status
 
 Nearly done. We'd like to get relative labels working so it can compile the
@@ -10,27 +15,20 @@ Should be usable now.
 
 ## Compiling from Source
 
-Compiling under UNIX and Cygwin environments:
+This is a converted version using the [fips](https://floooh.github.io/fips) build system.
 
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release ..
-    make
-    sudo make install
+You can use `./fips build` to generate libscas. The output will be in build/fips-deploy/scas/
+under a folder with the name of the current configuration.
 
-Compiling on windows is recommended with [MSYS2](https://msys2.github.io/),
-but will probably work with MinGW as well:
+To build for use on the web, first set up the Emscripten SDK with `./fips setup emscripten`, 
+then run `./fips set config emsc-make-release` and `./fips build`.
 
-    mkdir build
-    cd build
-    cmake -G 'MSYS Makefiles' -DCMAKE_BUILD_TYPE=Release ..
-    make
-    make install
+To build for Windows, use a configuration such as `winXX-vscode-release`, where XX
+is 32 or 64 (representing 32-bit or 64-bit builds). `vscode` is for Visual Studio Code,
+but `vs2015`, `vs2013`, `vs2017`, and `vstudio` are also valid for the middle component.
 
-Don't forget to run the MSYS terminal as admin, or install under 
-MSYS2 binaries with `-DCMAKE_INSTALL_PREFIX=/mingw64`.
-
-Now read `man scas` to learn how to use it.
+For a debug build, just replace the third component of the configuration triplet with `debug` (e.g.
+`./fips set config emsc-make-debug` or `fips set config win64-vstudio-debug`).
 
 ## Help, Bugs, Feedback
 
