@@ -4,8 +4,7 @@ Assembler and linker for z80.
 
 ## Fips version
 
-This is a fipsified version for use as a library. Please, PLEASE DO NOT try to use this as a PROGRAM!
-If you need a z80 assembler/linker, please use [the standard scas build](https://github.com/knightos/scas)!
+This is a fipsified version for use as a library. Can be included in fips projects, but can also be used to build a binary with `./fips build`.
 
 ## Status
 
