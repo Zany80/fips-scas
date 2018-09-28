@@ -16,7 +16,7 @@ Should be usable now.
 
 This is a converted version using the [fips](https://floooh.github.io/fips) build system.
 
-You can use `./fips build` to generate libscas. The output will be in build/fips-deploy/scas/
+You can use `./fips build` to generate the executable. The output will be in build/fips-deploy/scas/
 under a folder with the name of the current configuration.
 
 To build for use on the web, first set up the Emscripten SDK with `./fips setup emscripten`, 
@@ -28,6 +28,8 @@ but `vs2015`, `vs2013`, `vs2017`, and `vstudio` are also valid for the middle co
 
 For a debug build, just replace the third component of the configuration triplet with `debug` (e.g.
 `./fips set config emsc-make-debug` or `fips set config win64-vstudio-debug`).
+
+To use as a library, just use this repository as a fips import. The main function and all unneeded code will be eliminated automatically
 
 ## Help, Bugs, Feedback
 
