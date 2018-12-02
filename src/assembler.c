@@ -449,8 +449,7 @@ int try_split_line(struct assembler_state *state, char **line) {
 		"#define",
 		".define"
 	};
-	int i;
-	for (i = 0; i < sizeof(blacklist) / sizeof(char *); ++i) {
+	for (size_t i = 0; i < sizeof(blacklist) / sizeof(char *); ++i) {
 		if (code_strstr(*line, blacklist[i]) == *line) {
 			return 0;
 		}

@@ -306,7 +306,7 @@ int handle_define(struct assembler_state *state, char **argv, int argc) {
 		*location = _;
 		++location;
 	}
-	if ((strlen(argv[0]) + 1) == (location - argv[0])) { /* End of string? */
+	if ((strlen(argv[0]) + 1) == (size_t)(location - argv[0])) { /* End of string? */
 		list_add(define->macro_lines, "1"); /* default value is 1 */
 	} else {
 		while (isspace(*location)) {

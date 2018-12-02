@@ -77,7 +77,7 @@ char *strip_comments(char *str) {
 
 list_t *split_string(const char *str, const char *delims) {
 	list_t *res = create_list();
-	int i, j;
+	size_t i, j;
 	for (i = 0, j = 0; i < strlen(str) + 1; ++i) {
 		if (strchr(delims, str[i]) || i == strlen(str)) {
 			if (i - j == 0) {
