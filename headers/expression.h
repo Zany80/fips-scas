@@ -5,6 +5,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef __cplusplus
+#define operator _operator
+#endif
+
 enum {
 	SYMBOL = 0x00,
 	NUMBER = 0x01,
@@ -52,5 +56,9 @@ uint64_t evaluate_expression(tokenized_expression_t *expression, list_t
         *symbols, int *error, char **symbol);
 void fwrite_tokens(FILE *f, tokenized_expression_t *expression);
 tokenized_expression_t *fread_tokenized_expression(FILE *f);
+
+#ifdef __cplusplus
+#undef operator
+#endif
 
 #endif

@@ -65,6 +65,10 @@ typedef struct {
     list_t *exports;
 } object_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 object_t *create_object();
 void object_free(object_t *object);
 area_t *create_area(const char *name);
@@ -77,5 +81,9 @@ void fwriteobj(FILE *file, object_t *object);
 object_t *freadobj(FILE *file, const char *name);
 void add_source_map(source_map_t *map, int line_number, const char *line, uint64_t address, uint64_t length);
 source_map_t *create_source_map(area_t *area, const char *file_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

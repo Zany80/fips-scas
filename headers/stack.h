@@ -7,12 +7,20 @@ typedef struct {
 	void **items;
 } stack_type;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 stack_type *create_stack();
 void stack_free(stack_type *stack);
 void stack_push(stack_type *stack, void *item);
 void *stack_pop(stack_type *stack);
 void *stack_peek(stack_type *stack);
 void stack_shrink_to_fit(stack_type *stack);
+
+#ifdef __cplusplus
+}
+#endif
 
 #define STACK_GROWTH_RATE 16
 

@@ -47,6 +47,9 @@ struct assembler_state {
     bool auto_source_maps;
 };
 
+#ifdef __cplusplus
+extern "C"
+#endif
 object_t *assemble(FILE *file, const char *file_name, assembler_settings_t *settings);
 
 #endif
