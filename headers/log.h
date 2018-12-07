@@ -12,8 +12,8 @@ typedef enum {
 extern "C" {
 #endif
 void init_log(int verbosity);
-void scas_log(int verbosity, char* format, ...);
-void scas_abort(char* format, ...);
+void scas_log(int verbosity, const char* format, ...);
+void scas_abort(const char* format, ...);
 void indent_log();
 void deindent_log();
 void enable_colors();
