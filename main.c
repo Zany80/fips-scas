@@ -288,7 +288,7 @@ int main(int argc, char **argv) {
 	if (errors->length != 0) {
 		int i;
 		for (i = 0; i < errors->length; ++i) {
-			error_t *error = errors->items[i];
+			scas_error_t *error = errors->items[i];
 			fprintf(stderr, "%s:%d:%d: error #%d: %s\n", error->file_name,
 					(int)error->line_number, (int)error->column, error->code,
 					error->message);

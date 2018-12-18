@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-const char *get_error_string(error_t *error) {
+const char *get_error_string(scas_error_t *error) {
 	switch (error->code) {
 		case ERROR_INVALID_INSTRUCTION:
 			return "Invalid instruction '%s'";
@@ -39,7 +39,7 @@ const char *get_warning_string(warning_t *warning) {
 
 void add_error(list_t *errors, int code, size_t line_number, const char *line,
 		int column, const char *file_name, ...) {
-	error_t *error = malloc(sizeof(error_t));
+	scas_error_t *error = malloc(sizeof(scas_error_t));
 	error->code = code;
 	error->line_number = line_number;
 	error->file_name = malloc(strlen(file_name) + 1);
@@ -88,7 +88,7 @@ void add_error_from_map(list_t *errors, int code, list_t *maps, uint64_t address
 		}
 	}
 
-	error_t *error = malloc(sizeof(error_t));
+	scas_error_t *error = malloc(sizeof(scas_error_t));
 	error->code = code;
 	error->column = 0;
 
