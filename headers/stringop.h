@@ -23,7 +23,11 @@ int unescape_string(char *string);
 #endif
 
 #ifndef strcasecmp
-int strcasecmp(const char* s1, const char* s2) __attribute__((weak));
+int strcasecmp(const char* s1, const char* s2) 
+#ifndef _WIN32
+__attribute__((weak))
+#endif
+;
 #endif
 
 #endif

@@ -345,7 +345,7 @@ const char *verbosity_colors[] = {
 	"\x1B[1;30m", // L_DEBUG
 };
 
-void scas_log(int verbosity, char* format, ...) {
+void scas_log(int verbosity, const char* format, ...) {
 	if (verbosity <= v) {
 		int c = verbosity;
 		if (c > sizeof(verbosity_colors) / sizeof(char *)) {
@@ -372,7 +372,7 @@ void scas_log(int verbosity, char* format, ...) {
 	}
 }
 
-void scas_abort(char *format, ...) {
+void scas_abort(const char *format, ...) {
 	fprintf(stderr, "ERROR: ");
 	va_list args;
 	va_start(args, format);
