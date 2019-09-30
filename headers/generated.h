@@ -1,6 +1,6 @@
 #ifndef GENERATED_H
 #define GENERATED_H
 
-extern const char *z80_tab;
+extern const char *embedded_table;
 
 #endif

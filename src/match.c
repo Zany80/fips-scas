@@ -37,7 +37,8 @@ char *get_operand_string(instruction_t *inst, int *i, const char *code, int j) {
 	char *end;
 	if (delimiter == '*') {
 		const char *toks = "+- \t"; // Valid delimiters in this scenario
-		for (size_t k = 0; k < strlen(toks); ++k) {
+		int k;
+		for (k = 0; k < strlen(toks); ++k) {
 			end = code_strchr(code + j, toks[k]);
 			if (end) break;
 		}

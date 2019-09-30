@@ -15,12 +15,6 @@ typedef struct {
     format_writer write_output;
 } linker_settings_t;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 void link_objects(FILE *output, list_t *objects, linker_settings_t *settings);
-#ifdef __cplusplus
-}
-#endif
 
 #endif

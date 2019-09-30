@@ -15,6 +15,10 @@ enum {
     ERROR_DUPLICATE_SYMBOL,
 };
 
+enum {
+	WARNING_NO_EFFECT = 1,
+};
+
 typedef struct {
     int code;
     size_t line_number;
@@ -22,7 +26,7 @@ typedef struct {
     char *line;
     char *message;
     size_t column;
-} scas_error_t;
+} error_t;
 
 typedef struct {
     int code;
@@ -33,11 +37,13 @@ typedef struct {
     size_t column;
 } warning_t;
 
-const char *get_error_string(scas_error_t *error);
+const char *get_error_string(error_t *error);
 const char *get_warning_string(warning_t *warning);
 void add_error(list_t *errors, int code, size_t line_number, const char *line,
         int column, const char *file_name, ...);
 void add_error_from_map(list_t *errors, int code, list_t *maps, uint64_t
         address, ...);
+void add_warning(list_t *warnings, int code, size_t line_number,
+		const char *line, int column, const char *file_name, ...);
 
 #endif

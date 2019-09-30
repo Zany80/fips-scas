@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-const char *get_error_string(scas_error_t *error) {
+const char *get_error_string(error_t *error) {
 	switch (error->code) {
 		case ERROR_INVALID_INSTRUCTION:
 			return "Invalid instruction '%s'";
@@ -32,6 +32,8 @@ const char *get_error_string(scas_error_t *error) {
 
 const char *get_warning_string(warning_t *warning) {
 	switch (warning->code) {
+		case WARNING_NO_EFFECT:
+			return "'%s' has no effect %s";
 		default:
 			return NULL;
 	}
@@ -39,7 +41,7 @@ const char *get_warning_string(warning_t *warning) {
 
 void add_error(list_t *errors, int code, size_t line_number, const char *line,
 		int column, const char *file_name, ...) {
-	scas_error_t *error = malloc(sizeof(scas_error_t));
+	error_t *error = malloc(sizeof(error_t));
 	error->code = code;
 	error->line_number = line_number;
 	error->file_name = malloc(strlen(file_name) + 1);
@@ -67,6 +69,36 @@ void add_error(list_t *errors, int code, size_t line_number, const char *line,
 			line_number, column);
 }
 
+void add_warning(list_t *warnings, int code, size_t line_number,
+		const char *line, int column, const char *file_name, ...) {
+	warning_t *warning = malloc(sizeof(warning_t));
+	warning->code = code;
+	warning->line_number = line_number;
+	warning->file_name = malloc(strlen(file_name) + 1);
+	strcpy(warning->file_name, file_name);
+	warning->line = malloc(strlen(line) + 1);
+	strcpy(warning->line, line);
+	warning->column = column;
+
+	const char *fmt = get_warning_string(warning);
+
+	va_list args;
+	va_start(args, file_name);
+	int len = vsnprintf(NULL, 0, fmt, args);
+	va_end(args);
+
+	char *buf = malloc(len + 1);
+	va_start(args, file_name);
+	vsnprintf(buf, len + 1, fmt, args);
+	va_end(args);
+
+	warning->message = buf;
+
+	list_add(warnings, warning);
+	scas_log(L_ERROR, "Added warning '%s' at %s:%d:%d", buf, file_name,
+			line_number, column);
+}
+
 /* Locates the address in the source maps provided to get the file name and line number */
 void add_error_from_map(list_t *errors, int code, list_t *maps, uint64_t address, ...) {
 	source_map_t *map;
@@ -88,7 +120,7 @@ void add_error_from_map(list_t *errors, int code, list_t *maps, uint64_t address
 		}
 	}
 
-	scas_error_t *error = malloc(sizeof(scas_error_t));
+	error_t *error = malloc(sizeof(error_t));
 	error->code = code;
 	error->column = 0;
 

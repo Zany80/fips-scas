@@ -26,6 +26,14 @@ typedef struct {
 } symbol_t;
 
 typedef struct {
+	char *name;
+	size_t line_number;
+	char *line;
+	int column;
+	char *file_name;
+} unresolved_symbol_t;
+
+typedef struct {
     tokenized_expression_t *expression;
     uint64_t width;
     uint64_t address;
@@ -63,11 +71,9 @@ typedef struct {
     list_t *areas;
     /* Only used for assembly */
     list_t *exports;
+    list_t *imports;
+    list_t *unresolved;
 } object_t;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 object_t *create_object();
 void object_free(object_t *object);
@@ -81,9 +87,5 @@ void fwriteobj(FILE *file, object_t *object);
 object_t *freadobj(FILE *file, const char *name);
 void add_source_map(source_map_t *map, int line_number, const char *line, uint64_t address, uint64_t length);
 source_map_t *create_source_map(area_t *area, const char *file_name);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

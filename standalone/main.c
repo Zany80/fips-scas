@@ -25,7 +25,7 @@
 struct runtime scas_runtime;
 
 void init_scas_runtime() {
-	scas_runtime.arch = "z80";
+	scas_runtime.arch = "embedded_isa";
 	scas_runtime.jobs = LINK | ASSEMBLE;
 	scas_runtime.macros = create_list();
 	scas_runtime.output_type = EXECUTABLE;
@@ -93,6 +93,8 @@ void parse_arguments(int argc, char **argv) {
 				list_add(scas_runtime.input_files, argv[++i]);
 			} else if (strcmp("-c", argv[i]) == 0 || strcmp("--merge", argv[i]) == 0) {
 				scas_runtime.jobs &= ~LINK;
+			} else if (strcmp("-a", argv[i]) == 0 || strcmp("--architecture", argv[i]) == 0) {
+				scas_runtime.arch = argv[++i];
 			} else if (argv[i][1] == 'f') {
 				parse_flag(argv[i]);
 			} else if (argv[i][1] == 'I' || strcmp("--include", argv[i]) == 0) {
@@ -163,9 +165,9 @@ instruction_set_t *find_inst() {
 		f = fopen(path, "r");
 		free(path);
 		if (!f) {
-			if (!strcmp(scas_runtime.arch, "z80")) {
+			if (!strcmp(scas_runtime.arch, "embedded_isa")) {
 				// Load from internal copy
-				instruction_set_t *set = load_instruction_set_s(z80_tab);
+				instruction_set_t *set = load_instruction_set_s(embedded_table);
 				return set;
 			} else {
 				scas_abort("Unknown architecture: %s", scas_runtime.arch);
@@ -288,7 +290,7 @@ int main(int argc, char **argv) {
 	if (errors->length != 0) {
 		int i;
 		for (i = 0; i < errors->length; ++i) {
-			scas_error_t *error = errors->items[i];
+			error_t *error = errors->items[i];
 			fprintf(stderr, "%s:%d:%d: error #%d: %s\n", error->file_name,
 					(int)error->line_number, (int)error->column, error->code,
 					error->message);
@@ -345,7 +347,7 @@ const char *verbosity_colors[] = {
 	"\x1B[1;30m", // L_DEBUG
 };
 
-void scas_log(int verbosity, const char* format, ...) {
+void scas_log(int verbosity, char* format, ...) {
 	if (verbosity <= v) {
 		int c = verbosity;
 		if (c > sizeof(verbosity_colors) / sizeof(char *)) {
@@ -372,7 +374,7 @@ void scas_log(int verbosity, const char* format, ...) {
 	}
 }
 
-void scas_abort(const char *format, ...) {
+void scas_abort(char *format, ...) {
 	fprintf(stderr, "ERROR: ");
 	va_list args;
 	va_start(args, format);

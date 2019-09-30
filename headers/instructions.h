@@ -50,9 +50,6 @@ typedef struct {
     size_t shift;
 } instruction_operand_t;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 instruction_set_t *load_instruction_set(FILE *file);
 instruction_set_t *load_instruction_set_s(const char *set);
 void instruction_set_free(instruction_set_t *set);
@@ -60,8 +57,5 @@ instruction_operand_t *find_instruction_operand(instruction_t *inst, char key);
 immediate_t *find_instruction_immediate(instruction_t *inst, char key);
 operand_group_t *find_operand_group(instruction_set_t *set, const char *name);
 operand_t *find_operand(operand_group_t *group, const char *match);
-#ifdef __cplusplus
-}
-#endif
 
 #endif
